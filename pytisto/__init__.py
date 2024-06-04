@@ -7,7 +7,7 @@ it is designed to be:
     - feature rich
     - fast
 """
-import sys
+import sys, typing
 
 args = sys.argv[1:]
 
@@ -15,15 +15,24 @@ del sys
 
 
 def assert_equals(real, expect, message="") -> bool | str:
-    return is_matching if (is_matching := expect == real) else message if message != "" else is_matching
+    return is_matching if (is_matching := expect == real) else message if message else is_matching
 
 
 def assert_not_equals(real, expect, message="") -> bool | str:
-    return is_matching if (is_matching := expect != real) else message if message != "" else is_matching
+    return is_matching if (is_matching := expect != real) else message if message else is_matching
 
 
 def test_group(name: str, unit_tests: list[bool | str]) -> dict[str, list[bool | str]]:
     return {name: unit_tests}
+
+def expect_error(task: typing.Callable, values:list, expection: Exception, message: str = ""):
+    try:
+        task(values)
+    except:
+        return True
+    else:
+        return message if message else False 
+
 
 
 def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:

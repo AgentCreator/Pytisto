@@ -25,8 +25,8 @@ tests([
 ```
 What is Pytisto?
 ===
-it is a very simple and a very fast python test runner.
-### get started
+it is a very simple and very fast python test runner.
+## it is a very simple test runner
 - import pytisto.
 ```python
 from pytisto import *
@@ -82,3 +82,17 @@ if you'll have a lot of tests, and you only want to see which failed, you can pa
 ```commandline
 python3 tests.py onlyfails
 ```
+
+## it is a fast test runner
+
+here are benchmarks:
+
+|number of tests| ```Pytisto```|```unittest```  |```codewars_test```|
+|---------------|--------------|----------------|-------------------|
+| 3             | 0.00006008 s | 0.0000059605 s | 0.02 s            |
+| 10,003        | 0.003 s      | 0.010 s        | 90.11 s           |
+| 10,000,003    | 8.238 s      | 9.124 s        | 87987.96          |
+
+even tho python's builtin ```unittest``` framework wins by a very small amount in the 3 tests, ```Pytisto``` wins in all the others!
+
+**these benchmarks are inconsistent, so you may find different results (I don't think the difference may be bigger then a second)*
