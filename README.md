@@ -1,4 +1,4 @@
-# Welcome to Pytisto
+# Welcome to Pytisto <img src="logo.png" width=50></img>
 
 ```python
 from pytisto import *
@@ -27,7 +27,9 @@ tests([
 What is Pytisto?
 ===
 it is a very simple and very fast python test runner.
-i will try to update it daily.
+I will try to update it daily.
+
+> FUN FACT: tisto means 
 ## it is a very simple test runner
 - import pytisto.
 ```python
@@ -89,11 +91,11 @@ python3 tests.py onlyfails
 
 here are benchmarks:
 
-|number of tests| ```Pytisto```|```unittest```  |```codewars_test```|
-|---------------|--------------|----------------|-------------------|
-| 3             | 0.00006008 s | 0.0000059605 s | 0.02 s            |
-| 10,003        | 0.003 s      | 0.010 s        | 90.11 s           |
-| 10,000,003    | 8.238 s      | 9.124 s        | 87987.96          |
+| number of tests | ```Pytisto``` | ```unittest``` | ```codewars_test``` |
+|-----------------|---------------|----------------|---------------------|
+| 3               | 0.00006008 s  | 0.0000059605 s | 0.02 s              |
+| 10,003          | 0.003 s       | 0.010 s        | 90.11 s             |
+| 10,000,003      | 8.238 s       | 9.124 s        | 87987.96            |
 
 even tho python's builtin ```unittest``` framework wins by a very small amount in the 3 tests, ```Pytisto``` wins in all the others!
 
@@ -101,3 +103,8 @@ even tho python's builtin ```unittest``` framework wins by a very small amount i
 
 
 **with the third benchmark you may get vastly different results. I have no idea why, but sometimes it is 8.238 s and 9.124 s, and sometimes it is 13.237 s and 15.197 s.*
+
+# How to get started?
+- clone this repo to the project you want to use it in.
+- make a new file for tests (like ```tests.py```)
+- that's it! you can start by copying the tutorial and enjoying 
