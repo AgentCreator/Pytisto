@@ -25,9 +25,9 @@ def testies():
         test_group("haha", [
             assert_equals(2+2, 3) for _ in range(10_000)
         ]),
-        # test_group("random tests", [
-        #     assert_equals(RPS(i, o), tru_RPS(i,o)) for i, o in [(random.choice(["rock", "paper", "scissors"]), random.choice(["rock", "paper", "scissors"])) for _ in range(10_000_000)]
-        # ]),
+        test_group("random tests", [
+            assert_equals(RPS(i, o), tru_RPS(i,o)) for i, o in [(random.choice(["rock", "paper", "scissors"]), random.choice(["rock", "paper", "scissors"])) for _ in range(10_000_000)]
+        ]),
 
     ])
 

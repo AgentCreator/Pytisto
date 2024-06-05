@@ -1,4 +1,5 @@
 # Welcome to Pytisto
+
 ```python
 from pytisto import *
 tests([
@@ -26,6 +27,7 @@ tests([
 What is Pytisto?
 ===
 it is a very simple and very fast python test runner.
+i will try to update it daily.
 ## it is a very simple test runner
 - import pytisto.
 ```python
@@ -49,7 +51,7 @@ tests([
     ])
 ])
 ```
-- fill it with ```assert_equals()``` or ```assert_not_equals```
+- fill it with ```assert_equals()``` or ```assert_not_equals()``` or whatever else
 ```python
 from pytisto import *
 
@@ -96,3 +98,6 @@ here are benchmarks:
 even tho python's builtin ```unittest``` framework wins by a very small amount in the 3 tests, ```Pytisto``` wins in all the others!
 
 **these benchmarks are inconsistent, so you may find different results (I don't think the difference may be bigger then a second)*
+
+
+**with the third benchmark you may get vastly different results. I have no idea why, but sometimes it is 8.238 s and 9.124 s, and sometimes it is 13.237 s and 15.197 s.*
