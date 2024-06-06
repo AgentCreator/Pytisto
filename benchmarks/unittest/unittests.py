@@ -25,6 +25,7 @@ class TestStringMethods(unittest.TestCase):
             b = random.choice(["rock", "paper", "scissors"])
             self.assertEqual(RPS(a, b), tru_RPS(a, b))
 
+
 if __name__ == '__main__':
 
     unittest.main()

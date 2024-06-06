@@ -28,13 +28,10 @@ def example_tests():
     def haha():
         for _ in range(10_000):
             test.assert_equals(2 + 2, 3)
-    # # @test.it("exceptions")
-    # # def exceptions():
-    # #     # i don't know how to make exceptions
-    # @timee
-    # @test.it("random tests")
-    # def random_tests():
-    #     for i in range(10_000_000):
-    #         o = random.choice(["rock", "paper", "scissors"])
-    #         p = random.choice(["rock", "paper", "scissors"])
-    #         test.assert_equals(RPS(o, p), tru_RPS(o, p))
+    @timee
+    @test.it("random tests")
+    def random_tests():
+        for i in range(10_000_000):
+            o = random.choice(["rock", "paper", "scissors"])
+            p = random.choice(["rock", "paper", "scissors"])
+            test.assert_equals(RPS(o, p), tru_RPS(o, p))

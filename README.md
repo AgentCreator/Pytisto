@@ -26,10 +26,10 @@ tests([
 ```
 What is Pytisto?
 ===
-it is a very simple and very fast python test runner.
+it is a very simple, very minimalist and very fast python test runner.
 I will try to update it daily.
 
-> FUN FACT: tisto means 
+> FUN FACT 💡: tisto means "dough" in Ukrainian
 ## it is a very simple test runner
 - import pytisto.
 ```python
