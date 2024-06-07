@@ -8,7 +8,6 @@ it is designed to be:
     - fast
 
 """
-from contextlib import contextmanager
 import sys
 import typing
 
@@ -19,12 +18,13 @@ del sys
 
 def assert_equals(real, expect, message="") -> bool | str:
     """
-    returns True if the real and expections are matched
+    returns True if the real and expectations are matched
 
     in case of not mathing, returns False or the message (if provided)
     
     """
     return is_matching if (is_matching := expect == real) else message if message else is_matching
+
 
 def assert_true(statement, message="") -> bool | str:
     """
@@ -54,9 +54,6 @@ def assert_not_equals(real, expect, message="") -> bool | str:
     return is_matching if (is_matching := expect != real) else message if message else is_matching
 
 
-
-
-
 def expect_error(task: typing.Callable, values:list, exception: BaseException, message: str = ""):
     """
     what do you think you little bozo this function does?
@@ -77,16 +74,15 @@ def test_group(name: str, unit_tests: list[bool | str]) -> dict[str, list[bool |
     return {name: unit_tests}
 
 
-
 def silent_tests(name: str, unit_tests: list[dict[str, list[bool | str]]], destroy=True) -> None:
     """
     this does the same as the ```tests``` function,
-    but doesn't print out anything (unless on failure), and on failure of any of the tests says:
+    but doesn't print out anything (unless on failure), and on failure of the tests says:
     - where the error happened
     - in which group
-    - turns of of your code if ```destroy``` is set to ```True```
+    - turns of your code if ```destroy``` is set to ```True```
 
-    these silent tests are built so you can simply put one inside of your main file
+    these silent tests are built, so you can simply put one inside your main file,
     and it won't break anything
     """
     for i in unit_tests:
@@ -99,6 +95,29 @@ your silent tests have failed:
 name: {name}\ngroup: {list(i.keys())[0]}\n""")
                     if destroy:
                         __import__("sys", globals(), locals(), ["exit"], 0).exit()
+
+
+def expr_tests(func: typing.Callable, unit_tests: list[dict[tuple[typing.Any, ...], typing.Any]]):
+    """
+    an experimental test feature
+    makes your tests faster, but you have to do dict comprehension, which was literally made by devil himself.
+    param func: the function that we will be testing
+    param unit_tests: the tests
+    return: None
+    """
+    tasks = []
+    for p in unit_tests:
+        for i in p.keys():
+            try:
+                tasks.append(func(*i) == p[i])
+            except TypeError:
+                tasks.append(func(i) == p[i])
+    print(f"\n {'SUMMARY':^50} \n")
+    print(f"tested function: {func.__name__}()")
+    print(f"unique tests: {len(tasks)}")
+    print(f"passed: {tasks.count(True)}")
+    print(f"failed: {tasks.count(False)}")
+    print(f"rate: {tasks.count(True)/len(tasks):2.2%}")
 
 
 def test_test_group(i: dict, tasks: list, failed_groups: set, returnings: list):
@@ -124,21 +143,21 @@ def test_test_group(i: dict, tasks: list, failed_groups: set, returnings: list):
                 returnings.append(f"  X failed: {o}")
     return failed_groups, returnings
 
+
 def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
     """
     the main function to start the tests.
     """
     tasks: list[bool] = []
     failed_groups: set[str] = set()
-    returnings = []
-    returnings.append(f"\n {'TESTS':^50} \n")
+    returnings = [f"\n {'TESTS':^50} \n"]
     for i in unit_tests:
         i = dict(i)
         returnings.append(list(i.keys())[0] + ":")
         add_failed_groups, add_returnings = test_test_group(i, tasks, failed_groups, returnings)
         # tasks.append(add_tasks)
         failed_groups = failed_groups ^ add_failed_groups
-        returnings+= add_returnings
+        returnings += add_returnings
     print("\n".join(returnings))
     print(f"\n {'SUMMARY':^50} \n")
     print(f"tests: {len(tasks):,}")

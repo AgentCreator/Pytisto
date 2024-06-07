@@ -1,4 +1,4 @@
-# Welcome to Pytisto <img src="logo.png" width=50></img>
+# Welcome to Pytisto <img src="logo.png" width="50"/></img>
 
 ```python
 from pytisto import *
@@ -95,7 +95,7 @@ here are benchmarks:
 |-----------------|---------------|----------------|---------------------|
 | 3               | 0.00006008 s  | 0.0000059605 s | 0.02 s              |
 | 10,003          | 0.003 s       | 0.010 s        | 90.11 s             |
-| 10,000,003      | 8.238 s       | 9.124 s        | 87987.96            |
+| 10,000,003      | 8.238 s       | 9.124 s        | 87987.96 s          |
 
 even tho python's builtin ```unittest``` framework wins by a very small amount in the 3 tests, ```Pytisto``` wins in all the others!
 
@@ -103,6 +103,25 @@ even tho python's builtin ```unittest``` framework wins by a very small amount i
 
 
 **with the third benchmark you may get vastly different results. I have no idea why, but sometimes it is 8.238 s and 9.124 s, and sometimes it is 13.237 s and 15.197 s.*
+
+# experimental features
+pytisto has a few of new and exciting experimental features. currently there is only 1, it is **expr_tests**.
+it makes your code 2 times faster (8.844 s for 10,000,000 tests) using dictionary comprehension.
+
+to check it out just use the ```expr_tests()``` function, here is an example:
+```python
+
+from pytisto import *
+from main import tru_RPS as RPS
+from random import choice
+
+expr_tests(RPS, [
+        {
+            (vals := (choice(["rock", "paper", "scissors"]), choice(["rock", "paper", "scissors"]))): tru_rps(*vals) for
+            _ in range(10_000_000)
+        }
+    ])
+```
 
 # How to get started?
 - clone this repo to the project you want to use it in.
