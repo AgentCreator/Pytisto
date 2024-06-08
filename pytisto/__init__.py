@@ -8,12 +8,13 @@ it is designed to be:
     - fast
 
 """
-import sys
-import typing
+from sys import argv
+from typing import Callable
 
-args = sys.argv[1:]
 
-del sys
+args = argv[1:]
+
+del argv
 
 
 def assert_equals(real, expect, message="") -> bool | str:
@@ -46,7 +47,7 @@ def assert_false(statement, message="") -> bool | str:
 
 def assert_not_equals(real, expect, message="") -> bool | str:
     """
-    returns True if the real and expections are not matched
+    returns True if the real and expectations are not matched
 
     in case of mathing, returns False or the message (if provided)
     
@@ -54,10 +55,10 @@ def assert_not_equals(real, expect, message="") -> bool | str:
     return is_matching if (is_matching := expect != real) else message if message else is_matching
 
 
-def expect_error(task: typing.Callable, values:list, exception: BaseException, message: str = ""):
+def expect_error(task: Callable, values:list, exception: BaseException, message: str = ""):
     """
     what do you think you little bozo this function does?
-    (defenetly doesn't expect an error)
+    (definitely doesn't expect an error)
     btw, I don't yet know how to work with the with keyword so this code kinda sucks
     """
     try:
@@ -76,11 +77,11 @@ def test_group(name: str, unit_tests: list[bool | str]) -> dict[str, list[bool |
 
 def silent_tests(name: str, unit_tests: list[dict[str, list[bool | str]]], destroy=True) -> None:
     """
-    this does the same as the ```tests``` function,
+    this does the same as the tests function,
     but doesn't print out anything (unless on failure), and on failure of the tests says:
     - where the error happened
     - in which group
-    - turns of your code if ```destroy``` is set to ```True```
+    - turns of your code if destroy is set to True
 
     these silent tests are built, so you can simply put one inside your main file,
     and it won't break anything
@@ -97,57 +98,34 @@ name: {name}\ngroup: {list(i.keys())[0]}\n""")
                         __import__("sys", globals(), locals(), ["exit"], 0).exit()
 
 
-def expr_tests(func: typing.Callable, unit_tests: list[dict[tuple[typing.Any, ...], typing.Any]]):
-    """
-    an experimental test feature
-    makes your tests faster, but you have to do dict comprehension, which was literally made by devil himself.
-    param func: the function that we will be testing
-    param unit_tests: the tests
-    return: None
-    """
-    tasks = []
-    for p in unit_tests:
-        for i in p.keys():
-            try:
-                tasks.append(func(*i) == p[i])
-            except TypeError:
-                tasks.append(func(i) == p[i])
-    print(f"\n {'SUMMARY':^50} \n")
-    print(f"tested function: {func.__name__}()")
-    print(f"unique tests: {len(tasks)}")
-    print(f"passed: {tasks.count(True)}")
-    print(f"failed: {tasks.count(False)}")
-    print(f"rate: {tasks.count(True)/len(tasks):2.2%}")
 
-
-def test_test_group(i: dict, tasks: list, failed_groups: set, returnings: list):
-    """
-    as the name implies, tests a test group.
-    """
-    for o in list(i.values())[0]:
-        if isinstance(o, bool):
-            o = bool(o)
-            tasks.append(o)
-            if not o:
-                failed_groups.add(list(i.keys())[0])
-            if args == [] or (fails := args[0] != "onlyfails"):
-                if len(tasks) < 50:
-                    returnings.append("  \\/ passed" if o else "  X failed")
-            else:
-                if not o and len(tasks) < 50 or not fails:
-                    returnings.append("  X failed")
-        else:
-            o = str(o)
-            tasks.append(False)
-            if len(tasks) < 50 or not fails:
-                returnings.append(f"  X failed: {o}")
-    return failed_groups, returnings
 
 
 def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
     """
     the main function to start the tests.
     """
+
+    def test_test_group(oy: dict, taskies: list, failed_groupies: set, returningies: list):
+        for o in list(oy.values())[0]:
+            if isinstance(o, bool):
+                o = bool(o)
+                taskies.append(o)
+                if not o:
+                    failed_groupies.add(list(oy.keys())[0])
+                if args == [] or (fails := args[0] != "onlyfails"):
+                    if len(taskies) < 50:
+                        returningies.append("  \\/ Passed" if o else "  X Failed")
+                else:
+                    if not o and len(taskies) < 50 or not fails:
+                        returningies.append("  X Failed")
+            else:
+                o = str(o)
+                taskies.append(False)
+                if len(taskies) < 50 or not fails:
+                    returningies.append(f"  X Failed: {o}")
+        return failed_groupies, returningies
+
     tasks: list[bool] = []
     failed_groups: set[str] = set()
     returnings = [f"\n {'TESTS':^50} \n"]
@@ -168,3 +146,6 @@ def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
     del failed_groups
     print(f"rate: {tasks.count(True) / len(tasks):2.2%}")
     del tasks
+
+
+del Callable

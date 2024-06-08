@@ -23,9 +23,17 @@ tests([
             ]
         )
     ])
+
 ```
-What is Pytisto?
-===
+### full release soon!
+[get started](#how-to-get-started)&#8287;&#8287;&#8287;&#8287;&#8287;
+[automatic tests](#new-autotests)&#8287;&#8287;&#8287;&#8287;&#8287;
+[the speed](#it-is-a-fast-test-runner)&#8287;&#8287;&#8287;&#8287;&#8287;
+[the simplicity](#it-is-a-very-simple-test-runner)&#8287;&#8287;&#8287;&#8287;&#8287;
+
+
+# What is Pytisto?
+
 it is a very simple, very minimalist and very fast python test runner.
 I will try to update it daily.
 
@@ -82,10 +90,45 @@ failed groups:
 rate: 100.00%
 ```
 # **that's it!**
-if you'll have a lot of tests, and you only want to see which failed, you can pass in an argument "onlyfails"
+> PRO TIP: if you have a lot of tests, and you only want to see which failed, you can pass in an argument "onlyfails"
 ```commandline
 python3 tests.py onlyfails
 ```
+
+# NEW: autotests
+
+imagine how cool it would be to have automatically generated tests!
+
+well Pytisto can provide this functionality.
+
+just import ```expr_tests```
+```python
+from pytisto.expr_tests import autotest
+```
+and then add the ```@autotest``` decorator!
+if you want to compare this function to another, just add the ```ref``` argument and put in the function you want to compare the results with!
+
+your function doesn't work with the number 0? Simple!
+just add the ```rand_int_range``` argument and set it to a list of all the possible integers!
+
+```python
+from pytisto.expr_tests import autotest
+
+
+def say_hello2(to_who, age):
+    return f"hello, {age} year old {to_who}! My name is say_hello"
+
+
+@autotest()
+def say_hello(to_who, age):
+    # print(f"hello, {age} year old {to_who}! My name is say_hello")
+    return f"hello, {age} year old {to_who}! My name is say_hello"
+
+
+print(say_hello("Bob", 45))
+
+```
+
 
 ## it is a fast test runner
 
@@ -103,25 +146,6 @@ even tho python's builtin ```unittest``` framework wins by a very small amount i
 
 
 **with the third benchmark you may get vastly different results. I have no idea why, but sometimes it is 8.238 s and 9.124 s, and sometimes it is 13.237 s and 15.197 s.*
-
-# experimental features
-pytisto has a few of new and exciting experimental features. currently there is only 1, it is **expr_tests**.
-it makes your code 2 times faster (8.844 s for 10,000,000 tests) using dictionary comprehension.
-
-to check it out just use the ```expr_tests()``` function, here is an example:
-```python
-
-from pytisto import *
-from main import tru_RPS as RPS
-from random import choice
-
-expr_tests(RPS, [
-        {
-            (vals := (choice(["rock", "paper", "scissors"]), choice(["rock", "paper", "scissors"]))): tru_rps(*vals) for
-            _ in range(10_000_000)
-        }
-    ])
-```
 
 # How to get started?
 - clone this repo to the project you want to use it in.

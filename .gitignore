@@ -5,3 +5,5 @@ TODO.md
 main.py
 timing.py
 testing.py
+autotest/
+testing_autotest.py
