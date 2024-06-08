@@ -1,7 +1,6 @@
 from types import NoneType
 from typing import Callable, Any
 
-
 def expr_tests(func: Callable, unit_tests: list[dict[tuple[Any, ...], Any]]):
     """
     an experimental test feature
@@ -67,23 +66,36 @@ def silent_expr_tests(func: Callable, unit_tests: list[dict[tuple[Any, ...], Any
                         __import__("sys", globals(), locals(), ["exit"], 0).exit()
 
 
-def autotest(ref: Callable | None = None, rand_int_range: list | None = None, destroy: bool = True):
+def autotest(ref: Callable | None = None,
+             rand_int_range: list | None = None,
+             destroy: bool = True,
+             str_values: list[str] | None = None,
+             test_amount: int = 20
+
+             ):
+    #       ^^^ a sad and lonely smiley
     """
     a decorator for functions, that automatically generates tests for the function.
 
     these tests are silent, so you won't know about the running unless you put a print statement inside the tested
     function or get a message that shuts down your code (disable this by setting destroy to False)
 
-    in case of an error like "you can't divide by zero" or any other error surrounding the range of numbers,
+    in case of an error like "you can't divide by zero" or any other error about the range of numbers,
     just add rand_int_range, a list, that will contain all the possible numbers.
 
+    your code only works with specific string values? set the str_values list to all the possible values!
+
+    set the amount of tests taken with the test_amount value!
     """
 
-    def decor(a: Callable):
+    def decor(func: Callable):
+        """
+        the decorator.
+        """
         def autotest_func(*argus, **kwargs):
-            a(*argus, **kwargs)
+            # a(*argus, **kwargs)
             # imports
-            random_lib = __import__("random", globals(), locals(), ["randint, choice"])
+            random_lib = __import__("random", globals(), locals(), ["randint, choice", "getrandbits"])
             string_lib = __import__("string", globals(), locals(), ["ascii_letters"])
 
             types = [type(i) for i in argus]
@@ -92,23 +104,27 @@ def autotest(ref: Callable | None = None, rand_int_range: list | None = None, de
                 res = []
                 for i in types_list:
                     if i == int:
-                        res.append(random_lib.randint(-10_000, 10_000) if isinstance(rand_int_range, NoneType) else random_lib.choice(rand_int_range))
+                        res.append(random_lib.randint(-10_000, 10_000) if isinstance(rand_int_range, NoneType)
+                                   else random_lib.choice(rand_int_range))
                     elif i == str:
-                        res.append("".join(random_lib.choice([*string_lib.ascii_letters]) for _ in range(20)))
+                        res.append(random_lib.choice(str_values) if str_values else "".join(
+                            random_lib.choice([*string_lib.ascii_letters]) for _ in range(test_amount)))
+                    elif i == bool:
+                        res.append(random_lib.getrandbits(1))
                 return res
 
             if ref:
-                silent_expr_tests(a, [
+                silent_expr_tests(func, [
                     {
-                        (val := tuple(get_rand_test(types))): ref(*val) for i in range(20)
+                        (val := tuple(get_rand_test(types))): ref(*val) for i in range(test_amount)
                     }
                 ], destroy=destroy)
             else:
-                for i in range(100):
-                    a(*get_rand_test(types))
+                for i in range(test_amount):
+                    func(*get_rand_test(types))
             del string_lib
             del random_lib
-            return a(*argus, **kwargs)
+            return func(*argus, **kwargs)
 
         return autotest_func
 
