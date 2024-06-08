@@ -100,7 +100,7 @@ def autotest(ref: Callable | None = None, rand_int_range: list | None = None, de
             if ref:
                 silent_expr_tests(a, [
                     {
-                        (val := tuple(*get_rand_test(types))): ref(*val) for i in range(20)
+                        (val := tuple(get_rand_test(types))): ref(*val) for i in range(20)
                     }
                 ], destroy=destroy)
             else:
