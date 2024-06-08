@@ -26,10 +26,8 @@ tests([
 
 ```
 ### full release soon!
-[get started](#how-to-get-started)&#8287;&#8287;&#8287;&#8287;&#8287;
-[automatic tests](#new-autotests)&#8287;&#8287;&#8287;&#8287;&#8287;
-[the speed](#it-is-a-fast-test-runner)&#8287;&#8287;&#8287;&#8287;&#8287;
-[the simplicity](#it-is-a-very-simple-test-runner)&#8287;&#8287;&#8287;&#8287;&#8287;
+| [get started](#how-to-get-started) | [automatic tests](#new-autotests) | [the speed](#it-is-a-fast-test-runner) | [the simplicity](#it-is-a-very-simple-test-runner) |
+|------------------------------------|-----------------------------------|----------------------------------------|----------------------------------------------------|
 
 
 # What is Pytisto?
@@ -110,6 +108,8 @@ if you want to compare this function to another, just add the ```ref``` argument
 
 your function doesn't work with the number 0? Simple!
 just add the ```rand_int_range``` argument and set it to a list of all the possible integers!
+
+your function can only have specific strings? set the ```str_values``` to a list that contains or viable values for strings!
 
 ```python
 from pytisto.expr_tests import autotest
