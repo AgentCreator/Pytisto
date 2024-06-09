@@ -30,6 +30,11 @@ tests([
 |------------------------------------|-----------------------------------|----------------------------------------|----------------------------------------------------|
 
 
+## install
+
+type this into your command line:
+
+
 # What is Pytisto?
 
 it is a very simple, very minimalist and very fast python test runner.
@@ -146,8 +151,3 @@ even tho python's builtin ```unittest``` framework wins by a very small amount i
 
 
 **with the third benchmark you may get vastly different results. I have no idea why, but sometimes it is 8.238 s and 9.124 s, and sometimes it is 13.237 s and 15.197 s.*
-
-# How to get started?
-- clone this repo to the project you want to use it in.
-- make a new file for tests (like ```tests.py```)
-- that's it! you can start by copying the tutorial and enjoying 

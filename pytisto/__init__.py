@@ -55,7 +55,9 @@ def assert_not_equals(real, expect, message="") -> bool | str:
     return is_matching if (is_matching := expect != real) else message if message else is_matching
 
 
-def expect_error(task: Callable, exception: Exception, message: str = "") -> str | bool:
+def expect_error(task: Callable,
+                 exception: __import__("typing", globals(), locals(), ["Type"], 0).Type[ZeroDivisionError],
+                 message: str = "") -> str | bool:
     """
     what do you think you little bozo this function does?
     (definitely doesn't expect an error)
@@ -70,7 +72,7 @@ def expect_error(task: Callable, exception: Exception, message: str = "") -> str
         task()
     except exception:
         is_passed = True
-    return message or is_passed
+    return is_passed if is_passed else is_passed or message
 
 
 
