@@ -31,7 +31,7 @@ tests([
 
 ## install
 
-type this into your command line:
+type this into your command line to install the Pytisto test framework:
 
 ```
 pip3 install git+https://github.com/AgentCreator/Pytisto.git
