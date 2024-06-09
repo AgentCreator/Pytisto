@@ -25,15 +25,17 @@ tests([
     ])
 
 ```
-### full release soon!
-| [get started](#how-to-get-started) | [automatic tests](#new-autotests) | [the speed](#it-is-a-fast-test-runner) | [the simplicity](#it-is-a-very-simple-test-runner) |
-|------------------------------------|-----------------------------------|----------------------------------------|----------------------------------------------------|
+| [install](#install) | [automatic tests](#new-autotests) | [the speed](#it-is-a-fast-test-runner) | [the simplicity](#it-is-a-very-simple-test-runner) |
+|---------------------|-----------------------------------|----------------------------------------|----------------------------------------------------|
 
 
 ## install
 
 type this into your command line:
 
+```
+pip3 install git+https://github.com/AgentCreator/Pytisto.git
+```
 
 # What is Pytisto?
 
