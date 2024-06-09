@@ -55,17 +55,23 @@ def assert_not_equals(real, expect, message="") -> bool | str:
     return is_matching if (is_matching := expect != real) else message if message else is_matching
 
 
-def expect_error(task: Callable, values:list, exception: BaseException, message: str = ""):
+def expect_error(task: Callable, exception: Exception, message: str = "") -> str | bool:
     """
     what do you think you little bozo this function does?
     (definitely doesn't expect an error)
     btw, I don't yet know how to work with the with keyword so this code kinda sucks
+
+    if you want to pass in values to a function, just use a lambda
+
+    lambda: sum(10, 20)
     """
+    is_passed = False
     try:
-        task(values)
+        task()
     except exception:
-        return True
-    return message if message else False
+        is_passed = True
+    return message or is_passed
+
 
 
 def test_group(name: str, unit_tests: list[bool | str]) -> dict[str, list[bool | str]]:
@@ -88,17 +94,11 @@ def silent_tests(name: str, unit_tests: list[dict[str, list[bool | str]]], destr
     """
     for i in unit_tests:
         for o in i.values():
-            # print(o)
             for y in o:
                 if isinstance(y, str) or not y:
-                    print(f"""
-your silent tests have failed:
-name: {name}\ngroup: {list(i.keys())[0]}\n""")
+                    print(f"your silent tests have failed:\nname: {name}\ngroup: {list(i.keys())[0]}\n")
                     if destroy:
                         __import__("sys", globals(), locals(), ["exit"], 0).exit()
-
-
-
 
 
 def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
@@ -124,7 +124,6 @@ def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
                 taskies.append(False)
                 if len(taskies) < 50 or not fails:
                     returningies.append(f"  X Failed: {o}")
-        return failed_groupies, returningies
 
     tasks: list[bool] = []
     failed_groups: set[str] = set()
@@ -132,10 +131,7 @@ def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
     for i in unit_tests:
         i = dict(i)
         returnings.append(list(i.keys())[0] + ":")
-        add_failed_groups, add_returnings = test_test_group(i, tasks, failed_groups, returnings)
-        # tasks.append(add_tasks)
-        failed_groups = failed_groups ^ add_failed_groups
-        returnings += add_returnings
+        test_test_group(i, tasks, failed_groups, returnings)
     print("\n".join(returnings))
     print(f"\n {'SUMMARY':^50} \n")
     print(f"tests: {len(tasks):,}")
