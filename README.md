@@ -25,7 +25,6 @@ tests([
     ])
 
 ```
-### full release soon!
 | [get started](#how-to-get-started) | [automatic tests](#new-autotests) | [the speed](#it-is-a-fast-test-runner) | [the simplicity](#it-is-a-very-simple-test-runner) |
 |------------------------------------|-----------------------------------|----------------------------------------|----------------------------------------------------|
 
