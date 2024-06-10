@@ -2,10 +2,11 @@
 Notes:
     a library, that provides experimental features, like ```autotest```.
 """
-
+import random as random_lib
+import string as string_lib
 from types import NoneType
 from typing import Callable, Any
-
+from ..cases import Case, change_case
 
 def expr_tests(func: Callable, unit_tests: list[dict[tuple[Any, ...], Any]]):
     """
@@ -99,10 +100,6 @@ def autotest(ref: Callable | None = None,
         the decorator.
         """
         def autotest_func(*argus, **kwargs):
-            # a(*argus, **kwargs)
-            # imports
-            random_lib = __import__("random", globals(), locals(), ["randint, choice", "getrandbits"])
-            string_lib = __import__("string", globals(), locals(), ["ascii_letters"])
 
             types = [type(i) for i in argus]
 
@@ -117,8 +114,10 @@ def autotest(ref: Callable | None = None,
                             random_lib.choice([*string_lib.ascii_letters]) for _ in range(test_amount)))
                     elif i == bool:
                         res.append(random_lib.getrandbits(1))
-                return res
+                    elif i == float:
+                        res.append(random_lib.random)
 
+                return res
             if ref:
                 silent_expr_tests(func, [
                     {

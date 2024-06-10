@@ -15,7 +15,7 @@ Examples:
 
 """
 
-behavior_case = "case2"
+behavior_case = "default"
 
 
 class Case(object):
@@ -35,7 +35,15 @@ class Case(object):
             return self.default_behavior
         return self.case_kwargs[behavior_case]
 
+    def get_cases(self) -> list[str]:
+        return list(self.case_kwargs.keys())
+
 
 def change_case(to: str) -> None:
     global behavior_case
     behavior_case = to
+
+if __name__ == '__main__':
+    hello = Case("world", case2="hello", case3="hi")
+    print(hello)
+    print(hello.get_cases())

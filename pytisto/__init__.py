@@ -22,6 +22,6 @@ or finally
 
 >>> from pytisto import  cases
 """
-from .main import *
 from .cases import *
 from .expr_tests import *
+from .main import *
