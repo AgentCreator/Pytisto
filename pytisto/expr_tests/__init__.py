@@ -1,3 +1,8 @@
+"""
+Notes:
+    a library, that provides experimental features, like ```autotest```.
+"""
+
 from types import NoneType
 from typing import Callable, Any
 
