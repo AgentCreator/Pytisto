@@ -35,16 +35,6 @@ def assert_true(statement, message="") -> bool | str:
     """
     return statement if statement else message if message else statement
 
-
-def assert_false(statement, message="") -> bool | str:
-    """
-    returns True if the statement is True.
-
-    returns False or the message you provided if the statement is False.
-    """
-    return not statement if not statement else message if message else not statement
-
-
 def assert_not_equals(real, expect, message="") -> bool | str:
     """
     returns True if the real and expectations are not matched
