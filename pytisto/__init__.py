@@ -18,10 +18,6 @@ or
 
 >>> from pytisto import expr_tests
 
-or finally
-
->>> from pytisto import  cases
 """
-from .cases import *
 from .expr_tests import *
 from .main import *

@@ -20,7 +20,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(RPS("scissors", "rock"), "player 2 won!")
     @timee
     def test_isupper(self):
-        for i in range(10_000_000):
+        for i in range(10_010_000):
             a = random.choice(["rock", "paper", "scissors"])
             b = random.choice(["rock", "paper", "scissors"])
             self.assertEqual(RPS(a, b), tru_RPS(a, b))

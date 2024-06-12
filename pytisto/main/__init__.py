@@ -98,7 +98,7 @@ def silent_tests(name: str, unit_tests: list[dict[str, list[bool | str]]], destr
                 if isinstance(y, str) or not y:
                     print(f"your silent tests have failed:\nname: {name}\ngroup: {list(i.keys())[0]}\n")
                     if destroy:
-                        __import__("sys", globals(), locals(), ["exit"], 0).exit()
+                        quit()
 
 
 def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
@@ -132,6 +132,7 @@ def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
         i = dict(i)
         returnings.append(list(i.keys())[0] + ":")
         test_test_group(i, tasks, failed_groups, returnings)
+
     print("\n".join(returnings))
     print(f"\n {'SUMMARY':^50} \n")
     print(f"tests: {len(tasks):,}")

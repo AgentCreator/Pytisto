@@ -6,7 +6,7 @@ import random as random_lib
 import string as string_lib
 from types import NoneType
 from typing import Callable, Any
-from ..cases import Case, change_case
+
 
 def expr_tests(func: Callable, unit_tests: list[dict[tuple[Any, ...], Any]]):
     """
