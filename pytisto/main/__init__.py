@@ -16,16 +16,6 @@ args = argv[1:]
 del argv
 
 
-def assert_equals(real, expect, message="") -> bool | str:
-    """
-Returns True if the real and expectations are matched
-
-    in case of not mathing, returns False or the message (if provided)
-
-    """
-    return is_matching if (is_matching := expect == real) else message if message else is_matching
-
-
 def assert_true(statement, message="") -> bool | str:
     """
 Returns True if the statement is True.
@@ -34,6 +24,17 @@ Returns False or the message you provided if the statement is False.
     """
     return statement if statement else message if message else statement
 
+
+def assert_equals(real, expect, message="") -> bool | str:
+    """
+Returns True if the real and expectations are matched
+
+    in case of not mathing, returns False or the message (if provided)
+
+    """
+    return assert_true(real == expect, message)
+
+
 def assert_not_equals(real, expect, message="") -> bool | str:
     """
 Returns True if the real and expectations are not matched
@@ -41,7 +42,7 @@ Returns True if the real and expectations are not matched
     in case of mathing, returns False or the message (if provided)
 
     """
-    return is_matching if (is_matching := expect != real) else message if message else is_matching
+    return assert_true(real != expect, message)
 
 
 def expect_error(task: Callable,
@@ -96,32 +97,37 @@ def tests(unit_tests: list[dict[str, list[bool | str]]]) -> None:
     the main function to start the tests.
     """
 
-    def test_test_group(oy: dict, taskies: list, failed_groupies: set, returningies: list):
-        for o in list(oy.values())[0]:
-            if isinstance(o, bool):
-                o = bool(o)
-                taskies.append(o)
-                if not o:
-                    failed_groupies.add(list(oy.keys())[0])
-                if args == [] or (fails := args[0] != "onlyfails"):
-                    if len(taskies) < 50:
-                        returningies.append("  \\/ Passed" if o else "  X Failed")
-                else:
-                    if not o and len(taskies) < 50 or not fails:
-                        returningies.append("  X Failed")
-            else:
-                o = str(o)
-                taskies.append(False)
-                if len(taskies) < 50 or not fails:
-                    returningies.append(f"  X Failed: {o}")
-
     tasks: list[bool] = []
     failed_groups: set[str] = set()
     returnings = [f"\n {'TESTS':^50} \n"]
+
+    def test_test_group(oy: dict, ):
+        passing_message = "  \\/ Passed"
+        failing_message = "  X Failed"
+        for o in list(oy.values())[0]:
+            if isinstance(o, bool):
+                o = bool(o)
+                tasks.append(o)
+                if not o:
+                    failed_groups.add(list(oy.keys())[0])
+                if args == [] or (fails := args[0] != "onlyfails"):
+                    if len(tasks) < 50:
+                        returnings.append(passing_message if o else failing_message)
+                else:
+                    if not o and len(tasks) < 50 or not fails:
+                        returnings.append(failing_message)
+            else:
+                o = str(o)
+                tasks.append(False)
+                if len(tasks) < 50 or not fails:
+                    returnings.append(f"{failing_message}: {o}")
+
     for i in unit_tests:
+        if len(args) >= 1 and not tuple(i.keys())[0] in args[0:] and args[0] != "onlyfails":
+            continue
         i = dict(i)
-        returnings.append(list(i.keys())[0] + ":")
-        test_test_group(i, tasks, failed_groups, returnings)
+        returnings.append(tuple(i.keys())[0] + ":")
+        test_test_group(i)
 
     print("\n".join(returnings))
     print(f"\n {'SUMMARY':^50} \n")

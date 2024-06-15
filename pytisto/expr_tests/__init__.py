@@ -116,6 +116,8 @@ def autotest(ref: Callable | None = None,
                         res.append(random_lib.getrandbits(1))
                     elif i == float:
                         res.append(random_lib.random)
+                    elif i == list:
+                        res.append([i for i in range(rand_int_range[0], rand_int_range[1] + 1)])
 
                 return res
             if ref:
