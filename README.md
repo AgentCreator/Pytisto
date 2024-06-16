@@ -1,4 +1,4 @@
-# Welcome to Pytisto <img src="logo.png" width="50"/></img>
+# Welcome to Pytisto 1.4.2! <img src="logo.png" width="50"/></img>
 
 ```python
 from pytisto import *
@@ -99,8 +99,10 @@ rate: 100.00%
 ```commandline
 python3 tests.py onlyfails
 ```
-
-# NEW: autotests
+ 
+```diff
++ NEW: AutoTests
+```
 
 imagine how cool it would be to have automatically generated tests!
 
